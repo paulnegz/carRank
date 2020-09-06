@@ -38,7 +38,7 @@ router.get("/login", function(req, res){
 //login logic
 router.post("/login", passport.authenticate("local",
 	{
-		successRedirect: "/campgrounds",
+		successRedirect: "/cars",
 		failureRedirect: "/login"
 	})
 );
@@ -46,7 +46,7 @@ router.post("/login", passport.authenticate("local",
 router.get("/logout", function(req, res){
 	req.logout();
 	req.flash("success", "You logged out successfully");
-	res.redirect("/campgrounds");
+	res.redirect("/cars");
 });
 
 module.exports = router;

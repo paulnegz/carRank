@@ -7,14 +7,14 @@ var LocalStrategy 		  = require("passport-local");
 var methodOverride   	  = require("method-override");
 var passportLocalMongoose = require("passport-local-mongoose");
 var bodyParser 			  = require("body-parser");
-var campground			  = require("./models/campground");
+var car			  = require("./models/car");
 var comment				  = require("./models/comment");
 var user 				  = require("./models/user");
 var seedDB 				  = require("./seeds");
 // INCLUDING ROUTES
 var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
-var campgroundsRoutes = require("./routes/campgrounds");
+var carsRoutes = require("./routes/cars");
 
 app.use(flash());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -38,9 +38,10 @@ passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
 // mongoose.connect('mongodb://localhost/yelp_camp',{
-mongoose.connect('mongodb+srv://paulnegz:sKullcandiEs8991!@cluster0-6p1ed.mongodb.net/test?retryWrites=true&w=majority',{
+mongoose.connect('mongodb+srv://paulnegz:sKullcandiEs8991!@cluster0-6p1ed.mongodb.net/rankCar?retryWrites=true&w=majority',{
 	useNewUrlParser: true,
-	useCreateIndex: true
+	useCreateIndex: true,
+	useUnifiedTopology: true,
 }).then(() =>{
 	console.log('Connected to DB!');
 }).catch(err=> {
@@ -58,12 +59,12 @@ app.use(function(req, res, next){
 // seedDB(); //seed the datatbase
 
 app.use(indexRoutes);
-app.use("/campgrounds/:id/comments",commentRoutes);
-app.use("/campgrounds",campgroundsRoutes);
+app.use("/cars/:id/comments",commentRoutes);
+app.use("/cars",carsRoutes);
 
-app.listen(process.env.PORT, process.env.IP, function(){
-   console.log("The YelpCamp Server Has Started!");
-});
-// app.listen(3000, function(){
+// app.listen(process.env.PORT, process.env.IP, function(){
 //    console.log("The YelpCamp Server Has Started!");
 // });
+app.listen(3000, function(){
+   console.log("The YelpCamp Server Has Started!");
+});
